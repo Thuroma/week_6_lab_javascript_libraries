@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Events</title>
+
+  <style>
+
+    #canvas {
+      border: 1px black solid;
+    }
+
+  </style>
+
+</head>
+<body>
+
+
+<P>Drag the mouse on the canvas</P>
+<!--Set up labels and selectors for the color and brush size-->
+<label for="circle-color">Select circle color</label>
+<input id="circle-color" type="color">
+<br>
+<label for="brush-size">Select brush size</label>
+<input id="brush-size" type="range">
+<br>
+<canvas id="canvas" height="400" width="400"></canvas>
+
+
+<script>
+
+  let canvas = document.querySelector('#canvas')
+  let context = canvas.getContext('2d')
+
+  // Set up query selectors for the color and size elements
+  let colorSelector = document.querySelector('#circle-color')
+  let brushSelector = document.querySelector('#brush-size')
+  
+  
+  // Keep track of whether the mouse button has been pressed down or not.
+  // Think of this as whether the user is drawing or not, is their brush on the canvas?
+  let mousedown = false 
+
+  canvas.addEventListener('mousedown', function() {
+    mousedown = true
+  })
+
+  canvas.addEventListener('mouseup', function() {
+    mousedown = false 
+  })
+
+  // If mouse leaves the canvas then stop drawing
+  canvas.addEventListener('mouseout', function() {
+    mousedown = false
+  })
+
+  canvas.addEventListener('mousemove', function() {
+
+    // Get the color selection when the drawing is started
+    let color = colorSelector.value
+
+    // Get the brush size when the drawing is started
+    let brush = brushSelector.value
+
+    // If the mouse button is not pressed down, do not draw.
+    if (!mousedown) { return }
+
+    // event is a built-in variable, contains the event that triggered this function
+    // get the x, y location of the event
+    let x = event.offsetX
+    let y = event.offsetY   //offsetX, offsetY, may not work in older browsers
+
+    //Draw a filled rectangle centered under the mouse click
+    //x, y is the top left corner, so shift up and left by 5 to center it under the mouse.
+    //context.fillRect(x-5, y-5, 10, 10)
+
+    // Draw a circle with the mouse
+    context.beginPath()
+    // The starting point is the location of the cursor when it starts drawing
+    // The radius is set to the value of the range selector
+    context.arc(x, y, brush, 0, 6.3)
+    // The color is set to the color picker value
+    context.fillStyle = color
+    context.fill()
+
+
+  })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+/* Set the size of the map div */
+#bridge-map {
+    width: 600px;
+    height: 500px;
+    border: 1px black solid;
+}
